@@ -25,6 +25,12 @@ const errorHandler = (err, req, res, next) => {
     message = "Duplicate field value entered";
   }
 
+  if (/cloudinary|cloud_name/i.test(err.message || "")) {
+    statusCode = 500;
+    message =
+      "Cloudinary is misconfigured on the server. Re-save CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in Render, then redeploy.";
+  }
+
   res.status(statusCode).json({
     message,
     stack: process.env.NODE_ENV === "production" ? null : err.stack,
