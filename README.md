@@ -1,69 +1,117 @@
-# Pet Care Assistant 🐾
+# 🐾 Pet Care Web Application
 
-A full-stack web app for managing pets and getting pet-care advice from **PawDoc AI**, an AI pet health assistant (concept inspired by the Pawdoc AI feature in Petzify). Built as an internship project using the MERN stack.
+A full-stack MERN web application that allows users to manage their pets and interact with **PawDoc AI**, an AI-powered pet care assistant. Developed as part of a Software Developer Internship at **Petzify Pvt. Ltd.**
 
-## Features
+---
 
-- User registration/login with JWT auth
-- Add, edit, delete, and view pets (with photo upload via Cloudinary)
-- Search pets by name, filter by breed
-- **PawDoc AI** — a pet-health-focused chatbot (Google Gemini) that only answers pet-related questions (care, nutrition, grooming, vaccinations, exercise, behaviour, basic health guidance)
-- Chat history saved per user
-- Dark mode toggle
-- Responsive UI (Tailwind CSS)
+## 🚀 Live Demo
 
-## Tech Stack
+- **Frontend (Vercel):** https://petcare-web-application.vercel.app
+- **Backend (Render):** https://petcare-web-application.onrender.com
 
-| Layer | Tech |
-|---|---|
-| Frontend | React + Vite, Tailwind CSS |
-| Backend | Node.js, Express |
-| Database | MongoDB (Mongoose) |
-| Auth | JWT, bcrypt |
-| Image storage | Cloudinary |
-| AI | Google Gemini API |
+---
 
-## Project Structure
+## 📌 Features
+
+### 🔐 User Authentication
+- User Registration
+- User Login
+- JWT-based Authentication
+- Protected Routes
+- Logout
+
+### 🐶 Pet Management
+- Add a New Pet
+- View All Pets
+- Edit Pet Details
+- Delete Pet
+- Upload Pet Images using Cloudinary
+
+Each pet contains:
+- Pet Image
+- Pet Name
+- Breed
+- Age
+- Gender
+- Additional Notes
+
+### 🤖 PawDoc AI Assistant
+
+Google Gemini powered chatbot that provides guidance on:
+
+- Pet Care
+- Nutrition
+- Grooming
+- Vaccination Awareness
+- Exercise
+- Behaviour
+- Basic Health Tips
+
+The chatbot only answers pet-related questions and politely refuses unrelated topics through prompt engineering.
+
+### 💬 Chat History
+- Saves previous conversations
+- Displays chat history for each user
+
+### 🌙 Additional Features
+- Dark Mode
+- Responsive UI
+- Search Pets by Name
+- Filter Pets by Breed
+
+---
+
+# 🛠 Tech Stack
+
+| Layer | Technology |
+|--------|------------|
+| Frontend | React.js, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas |
+| Authentication | JWT, bcrypt |
+| Image Storage | Cloudinary |
+| AI Integration | Google Gemini API |
+| Deployment | Vercel, Render |
+
+---
+
+# 📂 Project Structure
 
 ```
-pet-care-app/
-├── client/          # React frontend
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       ├── services/
-│       ├── context/
-│       └── routes/
-├── server/          # Express backend
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
+pet-care-app
+│
+├── client
+│   ├── src
+│   │   ├── components
+│   │   ├── context
+│   │   ├── pages
+│   │   ├── routes
+│   │   └── services
+│
+├── server
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── utils
 │   └── seed.js
+│
 └── render.yaml
 ```
 
-## Getting Started
+---
 
-### 1. Clone / unzip and install dependencies
+# ⚙️ Environment Variables
 
-```bash
-cd server
-npm install
+### Server (.env)
 
-cd ../client
-npm install
-```
-
-### 2. Set up environment variables
-
-**server/.env** (copy from `.env.example`):
-
-```
+```env
 PORT=5000
+
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=some_long_random_string
+
+JWT_SECRET=your_jwt_secret
 JWT_EXPIRES_IN=7d
 
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -75,85 +123,169 @@ GEMINI_API_KEY=your_gemini_api_key
 CLIENT_URL=http://localhost:5173
 ```
 
-**client/.env** (copy from `.env.example`):
+### Client (.env)
 
-```
+```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-Where to get these:
-- **MongoDB**: create a free cluster at [mongodb.com/atlas](https://mongodb.com/atlas), get the connection string.
-- **Cloudinary**: sign up at [cloudinary.com](https://cloudinary.com), grab cloud name/API key/secret from the dashboard.
-- **Gemini API key**: get one from [Google AI Studio](https://aistudio.google.com/apikey).
+---
 
-### 3. (Optional) Load sample data
+# 💻 Local Setup
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd pet-care-app
+```
+
+### Install Dependencies
+
+Backend
 
 ```bash
 cd server
-node seed.js
+npm install
 ```
 
-This creates a demo account: `demo@petcare.com` / `demo1234`, with two sample pets.
+Frontend
 
-### 4. Run the app locally
+```bash
+cd client
+npm install
+```
 
-In one terminal:
+### Run Backend
+
 ```bash
 cd server
 npm run dev
 ```
 
-In another terminal:
+### Run Frontend
+
 ```bash
 cd client
 npm run dev
 ```
 
-Frontend runs at `http://localhost:5173`, backend at `http://localhost:5000`.
+Frontend:
+```
+http://localhost:5173
+```
 
-## API Endpoints
+Backend:
+```
+http://localhost:5000
+```
 
-**Auth**
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `POST /api/auth/logout`
+---
 
-**Pets** (all require `Authorization: Bearer <token>`)
-- `GET /api/pets` — supports `?search=` and `?breed=` query params
-- `POST /api/pets` — multipart form data, field name `image` for the photo
-- `GET /api/pets/:id`
-- `PUT /api/pets/:id`
-- `DELETE /api/pets/:id`
+# 📡 API Endpoints
 
-**Chat (PawDoc AI)**
-- `POST /api/chat` — body: `{ "message": "..." }`
-- `GET /api/chat` — chat history
+## Authentication
 
-## Deployment
+| Method | Endpoint |
+|---------|----------|
+| POST | /api/auth/register |
+| POST | /api/auth/login |
+| GET | /api/auth/me |
+| POST | /api/auth/logout |
 
-### Backend → Render
+---
 
-1. Push this repo to GitHub.
-2. On Render, create a new **Web Service**, point it at the repo.
-3. Set root directory to `server`.
-4. Build command: `npm install`, start command: `npm start`.
-5. Add all the env vars from `server/.env` in Render's dashboard.
-6. (There's a `render.yaml` in the root if you'd rather use Render's Blueprint feature.)
+## Pets
 
-### Frontend → Vercel
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/pets |
+| POST | /api/pets |
+| GET | /api/pets/:id |
+| PUT | /api/pets/:id |
+| DELETE | /api/pets/:id |
 
-1. Import the repo into Vercel.
-2. Set root directory to `client`.
-3. Framework preset: Vite.
-4. Add env var `VITE_API_URL` pointing to your deployed Render backend URL (e.g. `https://your-app.onrender.com/api`).
-5. Deploy.
+Supports:
+- Search
+- Breed Filter
+- Image Upload
 
-Don't forget to update `CLIENT_URL` in the backend's env vars to match your deployed Vercel URL, so CORS doesn't block requests.
+---
 
-## Notes
+## PawDoc AI
 
-- Passwords are hashed with bcrypt before being stored — never stored in plain text.
-- JWT tokens are stored in `localStorage` on the client and attached to every request via an axios interceptor.
-- PawDoc AI uses a system prompt to restrict Gemini to pet-related topics only (care, nutrition, grooming, vaccinations, exercise, behaviour, and basic health guidance), and politely declines anything else. It's not a replacement for a licensed vet — the UI reminds users of that.
-- Image uploads go straight to Cloudinary via `multer-storage-cloudinary`; only the resulting URL is stored in MongoDB.
+| Method | Endpoint |
+|---------|----------|
+| POST | /api/chat |
+| GET | /api/chat |
+
+---
+
+# ☁️ Deployment
+
+## Frontend
+
+- Vercel
+
+## Backend
+
+- Render
+
+## Database
+
+- MongoDB Atlas
+
+## Image Storage
+
+- Cloudinary
+
+---
+
+# 🔒 Security
+
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected Routes
+- Input Validation
+- Error Handling
+- Secure Cloudinary Uploads
+
+---
+
+# 📷 Screenshots
+
+You can add screenshots here:
+
+- Login Page
+- Dashboard
+- Add Pet
+- Pet List
+- PawDoc AI Chat
+- Dark Mode
+
+---
+
+# 🎯 Future Improvements
+
+- Email Verification
+- Password Reset
+- Appointment Booking
+- Pet Vaccination Reminders
+- Multi-language Support
+- Admin Dashboard
+
+---
+
+# 👩‍💻 Developed By
+
+**Fathima Rumaiza**
+
+Software Developer Intern
+
+Petzify Pvt. Ltd.
+
+---
+
+## 📄 License
+
+This project was developed for educational and internship evaluation purposes.
