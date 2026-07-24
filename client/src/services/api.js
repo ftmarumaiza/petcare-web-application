@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const normalizeApiBaseUrl = (value) => {
+  const rawBaseUrl = (value || "http://localhost:5000/api").trim().replace(/\/+$/, "");
+  return rawBaseUrl.endsWith("/api") ? rawBaseUrl : `${rawBaseUrl}/api`;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL: normalizeApiBaseUrl(import.meta.env.VITE_API_URL),
 });
 
 // attach token to every request if we have one
